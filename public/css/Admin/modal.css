@@ -1,0 +1,80 @@
+.modal_seccion {
+	position: absolute;
+	z-index: 10000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	font-family: 'Poppins', sans-serif;
+}
+
+.is-active {
+	display: flex;
+}
+
+.modal_border {
+	width: 80%;
+	height: 90%;
+	background-color: #fff;
+	border-radius: 10px;
+	position: relative;
+}
+.content_title{
+    height: 10%;
+    padding: 0.40rem 0 0.40rem 0.40rem;
+    
+}
+
+.content_title .modal_title{
+    font-weight: normal;
+}
+
+
+.modal_container button.cerrar-modal {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: #fff;
+}
+
+.modal_img img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	border-radius: 10px;
+}
+
+.modal_img {
+	width: 90%;
+	height: 100%;
+	background-color: #f1f1f1;
+	border-radius: 10px;
+	grid-column: 1/2;
+	grid-row: 1/3;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.content_button button{
+    padding: .5rem 1rem;
+    background-color: #5c636a;
+    color: #fff;
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+}
+
+.content_button button:nth-child(2){
+    background-color: #0b5ed7;
+}

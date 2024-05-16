@@ -1,0 +1,21 @@
+html:root{
+    box-sizing: border-box;
+    
+}
+*, *::before, *::after{
+    box-sizing: inherit;
+}
+body.body-ad{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+button.active{
+    background-color: #b2b2b2;
+
+}
+.content-pagination-button button:hover{
+	font-weight: bold !important;
+
+
+}
