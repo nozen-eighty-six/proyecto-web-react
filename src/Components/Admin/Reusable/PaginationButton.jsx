@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../../../public/css/Admin/paginationButton.css";
 import helpHttp from "../../../helpers/helpHttp";
-const PaginationButton = ({ pagina, controlador,setObjeto, option }) => {
+const PaginationButton = ({ pagina, controlador, setObjeto, option }) => {
   console.log(pagina);
   const [numPaginas, setNumPaginas] = useState([]);
   const refButton = useRef(null);
@@ -47,10 +47,9 @@ const PaginationButton = ({ pagina, controlador,setObjeto, option }) => {
   }, [pagina]);
   return (
     <div
-      className="content-pagination-button"
+      className="content-pagination-button sm:bottom-1 lg:bottom-2"
       style={{
         position: "absolute",
-        bottom: "20px",
         right: "20px",
         display: "flex",
         justifyContent: "center",

@@ -6,6 +6,7 @@ import CategoriaSection from "../../Components/Tienda/Home/CategoriaSection";
 import PiePagina from "../../Components/Tienda/Home/PiePagina";
 import BlogSection from "../../Components/Tienda/Home/BlogSection";
 import { useCallback, useEffect } from "react";
+import MenuToggle from "../../Components/Tienda/Home/MenuToggle";
 
 const Home = () => {
   useEffect(() => {
@@ -22,7 +23,7 @@ const Home = () => {
   
   }
 */
-  const cargaLazy = useCallback(() => {
+  const cargaLazyCarousel = useCallback(() => {
     const lazyImages = document.querySelectorAll(
       ".slide-product img[data-src]"
     );
@@ -30,14 +31,16 @@ const Home = () => {
       img.src = img.getAttribute("data-src");
     });
   }, []);
+
   return (
     <>
-      <LandingPage  cargaLazy={cargaLazy}/>
+      <LandingPage cargaLazy={cargaLazyCarousel} />
       <Carrusel />
       <Oferts />
       <CategoriaSection />
       <BlogSection />
       <PiePagina />
+      <MenuToggle />
     </>
   );
 };

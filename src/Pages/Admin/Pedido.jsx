@@ -43,9 +43,8 @@ const Pedido = () => {
 
   useEffect(() => {
     const getPedidos = () => {
-
       helpHttp()
-        .get("http://localhost:8080/pedidos/listar-siguientes-5",option)
+        .get("http://localhost:8080/pedidos/listar-siguientes-5", option)
         .then((res) => {
           if (!res.err) {
             setPedidos(res);
@@ -75,43 +74,52 @@ const Pedido = () => {
     if (issaved) {
       getPedidos();
     }
-
   }, [issaved, option]);
 
   useEffect(() => {
-    const paginationBtn = async ()=>{
+    const paginationBtn = async () => {
       const datos = await getData();
       setPagina(Math.ceil(datos.length / 5));
-    }
+    };
     paginationBtn();
-  },[]);
+  }, []);
 
   const getData = async () => {
     try {
       const url = "http://localhost:8080/pedidos/listar";
       const res = await fetch(url, option);
-      if(!res.ok) throw {err: true, status: res.status, statusText: res.statusText};
+      if (!res.ok)
+        throw { err: true, status: res.status, statusText: res.statusText };
       const data = await res.json();
       return data;
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
-    <main style={{ position: "relative", minHeight: "100vh" }}>
+    <main
+      className="lg:m-l-63"
+      style={{ position: "relative", minHeight: "100vh" }}
+    >
       <h2 style={{ fontWeight: "normal" }}>Top Moda | Pedido</h2>
       <Buscador
         seccion="pedidos"
+        setSeccionData={setPedidos}
         abrirModalCrearSeccion={true}
         crearButton={true}
         openModal={openModal}
         setIdent={setIdent}
       />
-      <div className="table-content">
+      <div className="table-content overflow-x-auto whitespace-nowrap">
         <PedidoTable data={pedidos} openModal={openModal} option={option} />
       </div>
-    <PaginationButton pagina={pagina} controlador={"pedidos"} option={option}  setObjeto={setPedidos} />
+      <PaginationButton
+        pagina={pagina}
+        controlador={"pedidos"}
+        option={option}
+        setObjeto={setPedidos}
+      />
       <ModalPedido
         isOpen={isOpen}
         closeModal={closeModal}

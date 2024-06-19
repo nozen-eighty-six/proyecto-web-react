@@ -1,17 +1,34 @@
-import "../../../../public/css/Admin/table.css"
+import "../../../../public/css/Admin/tablePrueba.css";
+import "../../../../public/css/Admin/table.css";
 
 import React from "react";
 import helpHttp from "../../../helpers/helpHttp";
 
-const ProductoTable = ({ productos,setIdent,setProductoSE,openModal,option }) => {
-
-  const getProductById = (id) => {  
-    helpHttp().get(`http://localhost:8080/productos/get/${id}`, option)
+const ProductoTable = ({
+  productos,
+  setIdent,
+  setProductoSE,
+  openModal,
+  option,
+}) => {
+  const getProductById = (id) => {
+    helpHttp()
+      .get(`http://localhost:8080/productos/get/${id}`, option)
       .then((res) => {
         if (!res.err) {
-          const {id,nombre,descripcion, imagen,precio, cantidad, categoria, marca, itemsProveedor } = res;
+          const {
+            id,
+            nombre,
+            descripcion,
+            imagen,
+            precio,
+            cantidad,
+            categoria,
+            marca,
+            itemsProveedor,
+          } = res;
           let productEnv = {
-            id: id, 
+            id: id,
             nombre: nombre,
             imagen: imagen,
             descripcion: descripcion,
@@ -19,21 +36,23 @@ const ProductoTable = ({ productos,setIdent,setProductoSE,openModal,option }) =>
             cantidad: cantidad,
             cbocategoria: categoria.id.toString(),
             cbomarca: marca.id.toString(),
-            cboproveedor: itemsProveedor[0].id.toString()
-          }
+            cboproveedor: itemsProveedor[0].id.toString(),
+          };
           console.log(productEnv);
           setProductoSE(productEnv);
         } else {
           console.log(res);
         }
       });
-  }
+  };
   return (
     <table className="table table-bordered table-striped" id="tablaProductos">
       <thead>
-        <tr>
+        <tr className="sm:hidden lg:table-row">
           <th scope="col">Nombre</th>
-          <th scope="col">Descripción</th>
+          <th scope="col" className="sm:hidden lg:table-cell">
+            Descripción
+          </th>
           <th scope="col">Cantidad</th>
           <th scope="col">Precio</th>
           <th scope="col">Marca</th>
@@ -47,19 +66,26 @@ const ProductoTable = ({ productos,setIdent,setProductoSE,openModal,option }) =>
           productos.map((producto) => {
             return (
               <tr key={producto.id}>
-                <td>{producto.nombre}</td>
-                <td>{producto.descripcion}</td>
-                <td>{producto.cantidad}</td>
-                <td>{producto.precio}</td>
-                <td>{producto.marca ? producto.marca.nombre : ""}</td>{" "}
+                <td data-label="Nombre">{producto.nombre}</td>
+                <td
+                  className="sm:hidden lg:table-cell"
+                  data-label="Descripción"
+                >
+                  {producto.descripcion}
+                </td>
+                <td data-label="Cantidad">{producto.cantidad}</td>
+                <td data-label="Precio">{producto.precio}</td>
+                <td data-label="Marca">
+                  {producto.marca ? producto.marca.nombre : ""}
+                </td>{" "}
                 {/* Verificación de la existencia de la marca */}
-                <td>
+                <td data-label="Categoría">
                   {producto.categoria ? producto.categoria.nombre : ""}
                 </td>{" "}
                 {/* Verificación de la existencia de la categoría */}
                 <td>
                   <button
-                    className="btn btn-warning edit col-12"
+                    className="btn btn-warning edit col-12 bg-gray-200 hover:bg-gray-300"
                     data-id={producto.id}
                     data-name="productos"
                     onClick={() => {
@@ -73,7 +99,7 @@ const ProductoTable = ({ productos,setIdent,setProductoSE,openModal,option }) =>
                 </td>
                 <td>
                   <button
-                    className="btn btn-danger delete col-12"
+                    className="btn btn-danger delete col-12 bg-gray-200 hover:bg-gray-300"
                     data-id={producto.id}
                     data-name="productos"
                   >

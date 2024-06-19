@@ -91,10 +91,7 @@ const Categoria = () => {
       }
     };
     paginationButton();
-    
   }, []);
-  
-  
 
   const getData = async () => {
     try {
@@ -110,16 +107,20 @@ const Categoria = () => {
   };
 
   return (
-    <main style={{ position: "relative", minHeight: "100vh" }}>
+    <main
+      className="lg:m-l-63"
+      style={{ position: "relative", minHeight: "100vh" }}
+    >
       <h2 style={{ fontWeight: "normal" }}>Top Moda | Categorías</h2>
       <Buscador
         seccion="categorias"
+        setSeccionData={setCategorias}
         abrirModalCrearSeccion={true}
         crearButton={true}
         openModal={openModal}
         setIdent={setIdent}
       />
-      <div className="table-content">
+      <div className="table-content overflow-x-auto">
         {categorias.length !== 0 && (
           <TableCTMR
             data={categorias}
@@ -141,7 +142,12 @@ const Categoria = () => {
         ident={ident}
         controlador={"categorias"}
       />
-      <PaginationButton pagina={pagina} controlador={"categorias"} setObjeto={setCategorias} option={option}/>
+      <PaginationButton
+        pagina={pagina}
+        controlador={"categorias"}
+        setObjeto={setCategorias}
+        option={option}
+      />
       <LoaderComponent page={true} />
     </main>
   );

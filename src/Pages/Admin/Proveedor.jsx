@@ -6,13 +6,15 @@ import ModalSeccion from "../../Components/Admin/Modals/ModalSeccion";
 import { useModal } from "../../hooks/useModal";
 import LoaderComponent from "../../Components/Reusable/LoaderComponent";
 import PaginationButton from "../../Components/Admin/Reusable/PaginationButton";
+import { SERVER_URL } from "../../consts/server";
+import { useSelector } from "react-redux";
 
 const Proveedor = () => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const state = useSelector((state) => state.token);
   const [pagina, setPagina] = useState(1);
   const [option, setOption] = useState({
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${state.tokenUser}`,
     },
   });
   const [proveedores, setProveedores] = useState([]);
@@ -41,9 +43,9 @@ const Proveedor = () => {
     }*/
   };
   useEffect(() => {
-    console.log("token", token);
+    // console.log("token", token);
     const getProveedores = async () => {
-      const url = "http://localhost:8080/proveedores/listar";
+      const url = SERVER_URL + "/proveedores/listar";
       helpHttp()
         .get(url, option)
         .then((res) => {
@@ -57,11 +59,11 @@ const Proveedor = () => {
 
     getProveedores();
     handleClick();
-  }, [token, option]);
+  }, [state.tokenUser, option]);
 
   useEffect(() => {
     const getProveedores = async () => {
-      const url = "http://localhost:8080/proveedores/listar";
+      const url = SERVER_URL + "/proveedores/listar";
       helpHttp()
         .get(url, option)
         .then((res) => {
@@ -91,7 +93,7 @@ const Proveedor = () => {
 
   const getData = async () => {
     try {
-      const url = "http://localhost:8080/proveedores/listar";
+      const url = SERVER_URL + "/proveedores/listar";
       const res = await fetch(url, option);
       if (!res.ok)
         throw {
@@ -106,17 +108,21 @@ const Proveedor = () => {
     }
   };
   return (
-    <main style={{ position: "relative", minHeight: "100vh" }}>
+    <main
+      className="lg:m-l-63"
+      style={{ position: "relative", minHeight: "100vh" }}
+    >
       <h2 style={{ fontWeight: "normal" }}>Top Moda | Proveedor</h2>
 
       <Buscador
         seccion="proveedores"
+        setSeccionData={setProveedores}
         abrirModalCrearSeccion={true}
         crearButton={true}
         openModal={openModal}
         setIdent={setIdent}
       />
-      <div className="table-content">
+      <div className="table-content overflow-x-auto whitespace-nowrap sm:mb-10">
         {proveedores.length != 0 && (
           <ProveedorTable
             proveedores={proveedores}
@@ -127,7 +133,12 @@ const Proveedor = () => {
           />
         )}
       </div>
-      <PaginationButton pagina={pagina} controlador={"proveedores"} option={option} setObjeto={setProveedores}/>
+      <PaginationButton
+        pagina={pagina}
+        controlador={"proveedores"}
+        option={option}
+        setObjeto={setProveedores}
+      />
       <ModalSeccion
         isOpen={isOpen}
         closeModal={closeModal}

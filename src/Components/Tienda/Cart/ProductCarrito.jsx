@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeProductFromCart,
+  updateTotalPrice,
+} from "../../../redux/shoppingSlice";
 
-const ProductCarrito = ({
-  producto,
-  setTotalCarrito,
-  totalCarrito,
-  productosCarrito,
-  setProductos,
-}) => {
-  const [cantidadProducto, setCantidadProducto] = useState(producto.cantidad);
-
-
+const ProductCarrito = ({ producto }) => {
+  //const [cantidadProducto, setCantidadProducto] = useState(producto.cantidad);
+  const carritoUser = useSelector((state) => state.carrito);
+  const dispatch = useDispatch();
 
   const actualizarTotal = (e) => {
     let total = 0;
@@ -19,7 +20,7 @@ const ProductCarrito = ({
       total += parseFloat(producto.precio) * producto.cantidad;
     });
 
-    setTotalCarrito(total);
+    dispatch(updateTotalPrice(total));
   };
 
   const actualizarCantidadProducto = (e) => {
@@ -30,23 +31,23 @@ const ProductCarrito = ({
 
     if (e.target.textContent == "+") {
       carrito[productoAct].cantidad += 1;
+      dispatch(increaseQuantity(id));
       localStorage.setItem("carrito", JSON.stringify(carrito));
-
     }
     if (e.target.textContent == "-") {
       if (carrito[productoAct].cantidad > 1) {
         carrito[productoAct].cantidad -= 1;
+        dispatch(decreaseQuantity(id));
         localStorage.setItem("carrito", JSON.stringify(carrito));
-
       } else {
-        carritoAct = productosCarrito.filter((prd) => prd.id !== id);
-        setProductos(carritoAct);
+        carritoAct = carrito.filter((prd) => prd.id !== id);
+        //setProductos(carritoAct);
+        dispatch(removeProductFromCart(id));
         localStorage.setItem("carrito", JSON.stringify(carritoAct));
-
       }
     }
 
-    setCantidadProducto(carrito[productoAct].cantidad);
+    //setCantidadProducto(carrito[productoAct].cantidad);
     actualizarTotal();
   };
 
@@ -79,7 +80,7 @@ const ProductCarrito = ({
           >
             +
           </button>
-          <span>{`${cantidadProducto}`}</span>
+          <span>{producto.cantidad}</span>
           <button
             className="btn-red"
             data-id={producto.id}

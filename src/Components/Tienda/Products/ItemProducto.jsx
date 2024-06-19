@@ -1,26 +1,33 @@
 import { forwardRef, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 const ItemProducto = forwardRef(function (props, ref) {
   const [carritoAgr, setCarritoAgr] = useState(false);
-  const { productoRec, usuario, openModal,setProductoId } = props;
-  console.log(usuario)
+  const state = useSelector((state) => state.carrito);
+  const dispatch = useDispatch();
+  const { productoRec, usuario, openModal, setProductoId } = props;
+  console.log(usuario);
 
   const agregarCarrito = (e) => {
     e.preventDefault();
     //const id = e.target.id;
     // console.log(id);
     console.log(e.target.parentNode.parentNode);
-    e.target.parentNode.parentNode.querySelector(".link-carrito").classList.remove("none");
+    e.target.parentNode.parentNode
+      .querySelector(".link-carrito")
+      .classList.remove("none");
     e.target.classList.add("none");
     agregarProductoCarrito(e.target.parentNode.parentNode, e.target.id);
   };
 
-  const abrirModalDetalle = (e)=>{
+  const abrirModalDetalle = (e) => {
     e.preventDefault();
     setProductoId(e.target.id);
     openModal();
-  }
+  };
 
   const agregarProductoCarrito = (elementoPro, id) => {
     const producto = {
@@ -33,7 +40,7 @@ const ItemProducto = forwardRef(function (props, ref) {
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     carrito.push(producto);
     localStorage.setItem("carrito", JSON.stringify(carrito));
-   // localStorage.setItem("carrito", JSON.stringify([...carrito, producto]));
+    // localStorage.setItem("carrito", JSON.stringify([...carrito, producto]));
   };
 
   const verificarProductoCarrito = (id) => {
@@ -41,10 +48,8 @@ const ItemProducto = forwardRef(function (props, ref) {
     return carrito.some((item) => item.id === id);
   };
 
-
   useEffect(() => {
     const verificarProductoEnCarrito = () => {
-      
       const enlaceAgregar = document.querySelectorAll(".agregar-barrito");
       //console.log(enlaceAgregar);
       enlaceAgregar.forEach((enlace) => {
@@ -52,26 +57,31 @@ const ItemProducto = forwardRef(function (props, ref) {
         if (verificarProductoCarrito(enlace.getAttribute("id"))) {
           //setCarritoAgr(true);
           enlace.classList.add("none");
-          enlace.parentNode.querySelector(".link-carrito").classList.remove("none");
-
-        }
-        else{ 
+          enlace.parentNode
+            .querySelector(".link-carrito")
+            .classList.remove("none");
+        } else {
           enlace.classList.remove("none");
-          enlace.parentNode.querySelector(".link-carrito").classList.add("none");
-
+          enlace.parentNode
+            .querySelector(".link-carrito")
+            .classList.add("none");
         }
       });
     };
     verificarProductoEnCarrito();
 
-    return()=>{
-      
-    }
+    return () => {};
   }, []);
 
   return (
     <div className="product" ref={ref}>
-      <img src={`../../public/images/${productoRec.imagen}`} alt="" id="_1" />
+      <LazyLoadImage
+        src={`../../public/images/${productoRec.imagen}`}
+        className=" mx-auto"
+        id="_1"
+        effect="opacity"
+        threshold="30"
+      />
       <div className="product-txt">
         <h3>{productoRec.nombre}</h3>
         <p>{productoRec.descripcion}</p>
@@ -79,32 +89,45 @@ const ItemProducto = forwardRef(function (props, ref) {
 
         {usuario == false && (
           <div className="button-container">
-            <button className=" detalle-producto btn2" id={`${productoRec.id}`} onClick={abrirModalDetalle}>
+            <button
+              className=" detalle-producto btn2"
+              id={`${productoRec.id}`}
+              onClick={abrirModalDetalle}
+            >
               Ver Detalles
             </button>
           </div>
         )}
         {usuario == true && (
-          <div className="button-container">
-            <a
-              href="#"
-              className={`agregar-barrito btn2`}
-              id={`${productoRec.id}`}
-              onClick={agregarCarrito}
-            >
-              Agregar al carrito{" "}
-            </a>
-            
-            <NavLink
+          <>
+            <div className="button-container">
+              <button
+                className=" detalle-producto btn2"
+                id={`${productoRec.id}`}
+                onClick={abrirModalDetalle}
+              >
+                Ver Detalles
+              </button>
+            </div>
+            <div className="button-container">
+              <a
+                href="#"
+                className={`agregar-barrito btn2`}
+                id={`${productoRec.id}`}
+                onClick={agregarCarrito}
+              >
+                Agregar al carrito{" "}
+              </a>
+
+              <NavLink
                 to="/cart"
                 className={`link-carrito none`}
                 id={`${productoRec.id}`}
               >
                 Ir al carrito{" "}
-                </NavLink>
-            
-            
-          </div>
+              </NavLink>
+            </div>
+          </>
         )}
       </div>
     </div>

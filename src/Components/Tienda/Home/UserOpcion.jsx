@@ -1,14 +1,19 @@
 import React from "react";
 
-const UserOpcion = ({usuario, cerrarSesion}) => {
+const UserOpcion = ({ user, cerrarSesion }) => {
+  console.log(user);
+  const { nombre, mail } = JSON.parse(user);
+  console.log(nombre);
   return (
-    <div className="card-user" id="card">
+    <div className="card-option" id="card">
       <header className="card-header">
-        <h1>TOP MODA</h1>
+        <h2>TOP MODA</h2>
       </header>
       <section className="datos">
-        <h2>Usuario: {usuario.nombre}</h2>
-        <span id="usuarioCorreo">{usuario.mail}</span>
+        <h2 className="text-xl text-black">Usuario: {nombre}</h2>
+        <span className="text-xl" id="usuarioCorreo">
+          {mail}
+        </span>
       </section>
       <section className="cerrarsesion">
         <a
@@ -19,7 +24,7 @@ const UserOpcion = ({usuario, cerrarSesion}) => {
         >
           <img
             src="../../public/images/close.svg"
-            className="user-icons"
+            className="user-icons inline"
             id="close"
             onClick={cerrarSesion}
           />

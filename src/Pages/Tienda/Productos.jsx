@@ -8,6 +8,7 @@ import LoaderComponent from "../../Components/Reusable/LoaderComponent";
 import { useModal } from "../../hooks/useModal";
 import ProductDetail from "../../Components/Tienda/Products/ProductDetail";
 import PiePagina from "../../Components/Tienda/Home/PiePagina";
+import MenuToggle from "../../Components/Tienda/Home/MenuToggle";
 
 const Productos = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -39,17 +40,17 @@ const Productos = () => {
       console.log("Usuario no logueado");
       setUsuario(false);
       getProducts();
-    } if(usuarioLoc && category) {
+    }
+    if (usuarioLoc && category) {
       console.log("Usuario logueado");
       setUsuario(true);
       getProductByCategory(category);
-    }
-    else if (!usuarioLoc && category) {
+    } else if (!usuarioLoc && category) {
       console.log("Usuario no logueado");
       setUsuario(false);
       getProductByCategory(category);
     }
- 
+
     function getProductByCategory(category) {
       helpHttp()
         .get(`http://localhost:8080/productos/${category}`)
@@ -252,11 +253,11 @@ const Productos = () => {
 
   return (
     <>
-      <main className="products container" id="lista-1" style={{"width":"100%"}}>
+      <main className="products container md:px-0" id="lista-1">
         {!category ? (
           <>
             <h2>camisas</h2>
-            <div className="product-content">
+            <div className="container product-content">
               {dataCamisa === undefined && <p>Loading...</p>}
 
               {console.log(dataCamisa)}
@@ -428,22 +429,22 @@ const Productos = () => {
           </>
         ) : (
           <>
-          <h2>{category == "ninio" ? "Niños": category.toUpperCase()}</h2>
-          <div className="product-content">
-          {productCategory === undefined && <p>Loading...</p>}
-          {productCategory &&
-            productCategory.map((productoR) => (
-              <ItemProducto
-                key={productoR.id}
-                productoRec={productoR}
-                usuario={usuario}
-                setProductoId={setProductoId}
-                openModal={openModal}
-                ref={itemProductRef}
-              />
-            ))}
-        </div>
-        </>
+            <h2>{category == "ninio" ? "Niños" : category.toUpperCase()}</h2>
+            <div className="product-content">
+              {productCategory === undefined && <p>Loading...</p>}
+              {productCategory &&
+                productCategory.map((productoR) => (
+                  <ItemProducto
+                    key={productoR.id}
+                    productoRec={productoR}
+                    usuario={usuario}
+                    setProductoId={setProductoId}
+                    openModal={openModal}
+                    ref={itemProductRef}
+                  />
+                ))}
+            </div>
+          </>
         )}
         {/*<article className="modal"></article>*/}
         {isOpen && (
@@ -453,8 +454,11 @@ const Productos = () => {
             closeModal={closeModal}
           />
         )}
-        <LoaderComponent />
       </main>
+      <MenuToggle />
+
+      <LoaderComponent page={true} />
+
       <PiePagina />
     </>
   );

@@ -1,0 +1,23 @@
+@media (min-width: 640px) {
+  /* .table tr {
+    display: block;
+    margin-bottom: 1rem;
+  }
+*/
+  .table td {
+    display: block;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+}

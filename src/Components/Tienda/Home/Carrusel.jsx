@@ -1,4 +1,7 @@
 import { useEffect, useRef } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import imagenPreCarga from "../../../../public/images/default.jpg";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 const Carrusel = () => {
   console.log("Carrusel");
@@ -46,23 +49,26 @@ const Carrusel = () => {
     };
   }, []);
 
-
-
   return (
-    <section className="products container lazy" id="lista-1" ref={$sectionRef}>
-      <div className="slider">
+    <section
+      className="products container sm:min-vh-70 sm:mb-4
+       sm:w-90 sm:box-content xl:max-w-screen-xl lazy"
+      id="lista-1"
+      ref={$sectionRef}
+    >
+      <div className="slider sm:h-full">
         <h2>Productos</h2>
 
-        <div className="slider-products " ref={$slidesRef}>
+        <div className="slider-products sm:h-4/5" ref={$slidesRef}>
           <div className="slide-product active">
             <div className="product-img">
-              <img
-                className="img"
-                data-src="../../public/images/sobrecamisa-arica.webp"
-                alt=""
+              <LazyLoadImage
+                className="md:w-3/5 md:h-full md:mx-auto"
+                effect="opacity"
+                src="../../public/images/sobrecamisa-arica.webp"
               />
             </div>
-            <div className="product-txt">
+            <div className="box-border product-txt text-center">
               <h3>Sobrecamisa Shacket</h3>
 
               <a href="product-camisa.html" className="informacion btn-2">
@@ -73,10 +79,10 @@ const Carrusel = () => {
 
           <div className="slide-product">
             <div className="product-img">
-              <img
-                className="img"
-                data-src="../../public/images/casaca-vaquera.webp"
-                alt=""
+              <LazyLoadImage
+                src="../../public/images/casaca-vaquera.webp"
+                className="md:w-3/5 md:h-full md:mx-auto"
+                effect="opacity"
               />
             </div>
             <div className="product-txt">
@@ -88,10 +94,10 @@ const Carrusel = () => {
           </div>
           <div className="slide-product">
             <div className="product-img">
-              <img
-                className="img"
-                data-src="../../public/images/gorra-flex.jpg"
-                alt=""
+              <LazyLoadImage
+                src="../../public/images/gorra-flex.jpg"
+                className="md:w-3/5 md:h-full md:mx-auto"
+                effect="opacity"
               />
             </div>
             <div className="product-txt">
@@ -104,10 +110,10 @@ const Carrusel = () => {
           </div>
           <div className="slide-product">
             <div className="product-img">
-              <img
-                className="img"
-                data-src="../../public/images/polo-drymove-2.png"
-                alt=""
+              <LazyLoadImage
+                src="../../public/images/polo-drymove-2.png"
+                className="md:w-3/5 md:h-full md:mx-auto"
+                effect="opacity"
               />
             </div>
             <div className="product-txt">
@@ -120,10 +126,10 @@ const Carrusel = () => {
           </div>
           <div className="slide-product">
             <div className="product-img">
-              <img
-                className="img"
-                data-src="../../public/images/zapatilla-nike-3.jpg"
-                alt=""
+              <LazyLoadImage
+                src="../../public/images/zapatilla-nike-3.jpg"
+                className="md:w-3/5 md:h-full md:mx-auto"
+                effect="opacity"
               />
             </div>
             <div className="product-txt">
@@ -142,7 +148,7 @@ const Carrusel = () => {
             <img src="../../public/images/icono-back.svg" alt="back" />
           </button>
           <button
-            className="next"
+            className="next mr-1   "
             href="#"
             style={{ backgroundColor: "transparent", cursor: "pointer" }}
           >

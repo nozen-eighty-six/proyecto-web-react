@@ -1,19 +1,16 @@
 //import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Pages/Login";
 import PrivateRoute from "./Components/Routes/PrivateRoute";
 import PublicRoutes from "./Components/Routes/PublicRoutes";
 function App() {
-
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/admin/*" element={<PrivateRoute />} />
         <Route path="/login" element={<Login />} />{" "}
-        
         {/* Definición de la ruta para "/login" */}
         <Route path="*" element={<PublicRoutes />} />
       </Routes>

@@ -1,22 +1,34 @@
 import { useEffect, useState } from "react";
-import  "../../../public/css/Tienda/carrito.css";
+import { useDispatch, useSelector } from "react-redux";
+
+import "../../../public/css/Tienda/carrito.css";
 import PiePagina from "../../Components/Tienda/Home/PiePagina";
 import ProductCarrito from "../../Components/Tienda/Cart/ProductCarrito";
 import ButtonPaypal from "../../Components/Tienda/Cart/ButtonPaypal";
-import LoaderComponent from "../../Components/Reusable/LoaderComponent"
+import LoaderComponent from "../../Components/Reusable/LoaderComponent";
+import {
+  clearCart,
+  updateTotalPrice,
+  uploadProducts,
+} from "../../redux/shoppingSlice";
+import MenuToggle from "../../Components/Tienda/Home/MenuToggle";
 
 const Cart = () => {
-  const [totalCarrito, setTotalCarrito] = useState(0);
+  // const [totalCarrito, setTotalCarrito] = useState(0);
+  //const [productos, setProductos] = useState(null);
+  const state = useSelector((state) => state.carrito);
+  console.log(state);
+  const dispatch = useDispatch();
   const [usuario, setUsuario] = useState(false);
-  const [productos, setProductos] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
 
   const vaciarCarrito = (e) => {
     e.preventDefault();
     localStorage.removeItem("carrito");
-    setProductos(null);
+    // setProductos(null);
+    dispatch(clearCart());
     setIsDisabled(true);
-    document.querySelector("#total-carrito").textContent = 0;
+    //document.querySelector("#total-carrito").textContent = 0;
   };
   useEffect(() => {
     const usuarioLoc = localStorage.getItem("usuario");
@@ -24,18 +36,20 @@ const Cart = () => {
     if (usuarioLoc) {
       setUsuario(true);
     }
-
+    //llenar el producto cuando se cargue el componente
     const llenarProductosCarrito = () => {
       const productos = JSON.parse(localStorage.getItem("carrito"));
       if (productos == null || productos.length == 0) {
-        setProductos([]);
+        //setProductos([]);
+        dispatch(uploadProducts([]));
         setIsDisabled(true);
         return;
       }
 
-      setProductos(productos);
+      //setProductos(productos);
+      dispatch(uploadProducts(productos));
     };
-/*
+    /*
     const actualizarPrice = () => {
       const productosCarr = JSON.parse(localStorage.getItem("carrito"));
       let total = 0;
@@ -51,37 +65,33 @@ const Cart = () => {
     llenarProductosCarrito();
 
     //return () => setProductos([]);
-
-    
   }, []);
-
 
   useEffect(() => {
     const actualizarPrice = () => {
       const productosCarr = JSON.parse(localStorage.getItem("carrito"));
       let total = 0;
-      
+
       if (productosCarr) {
         productosCarr.forEach((producto) => {
           total += producto.precio * producto.cantidad;
         });
       }
-      setTotalCarrito(total);
+      //setTotalCarrito(total);
+      dispatch(updateTotalPrice(total));
     };
-      actualizarPrice();
-  }, [productos]);
+    actualizarPrice();
+  }, [dispatch]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
   }, []);
-
 
   return (
     <>
       <div
         className="content-cart"
-        style={{ position: "relative", overflowY: "hidden", }}
+        style={{ position: "relative", overflowY: "hidden" }}
       >
         <header className="header-cart">
           <img id="flechaAtras" className="img" src="images/flecha.png" />
@@ -104,29 +114,28 @@ const Cart = () => {
               <tbody>
                 <div
                   className={`content-message ${
-                    (productos == null || productos.length == 0) &&
+                    (state?.products == null || state?.products.length == 0) &&
                     "is-active-cart "
                   }`}
                 >
                   <span>No se ha agregado ningún producto</span>
                 </div>
 
-                {productos &&
-                  productos.map((producto) => {
+                {state?.products &&
+                  state?.products.map((producto) => {
+                    console.log(producto);
                     return (
-                      <ProductCarrito
-                        key={producto.id}
-                        producto={producto}
-                        setTotalCarrito={setTotalCarrito}
-                        totalCarrito={totalCarrito}
-                        productosCarrito={productos}
-                        setProductos={setProductos}
-                      />
+                      <ProductCarrito key={producto.id} producto={producto} />
                     );
                   })}
               </tbody>
             </table>
-            <a href="#" id="vaciar-carrito" className={`${isDisabled && 'is-disabled'}`} onClick={vaciarCarrito}  >
+            <a
+              href="#"
+              id="vaciar-carrito"
+              className={`${isDisabled && "is-disabled"}`}
+              onClick={vaciarCarrito}
+            >
               <span>Vaciar carrito</span>
             </a>
           </div>
@@ -134,14 +143,15 @@ const Cart = () => {
           <div className="content-pago">
             <div className="col-lg-3 carrito-total">
               <h2 className="card-total">
-                TOTAL: $ <span id="total-carrito">{totalCarrito}</span>
+                TOTAL: $ <span id="total-carrito">{state?.totalPrice}</span>
               </h2>
             </div>
             <ButtonPaypal />
             <div className="desabilitar"></div>
           </div>
         </section>
-        <LoaderComponent />
+        <MenuToggle />
+        <LoaderComponent page={true} />
         <PiePagina />
       </div>
     </>

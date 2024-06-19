@@ -43,9 +43,8 @@ const Entrada = () => {
 
   useEffect(() => {
     const getEntradas = () => {
-
       helpHttp()
-        .get("http://localhost:8080/entradas/listar-siguientes-5",option)
+        .get("http://localhost:8080/entradas/listar-siguientes-5", option)
         .then((res) => {
           if (!res.err) {
             console.log(res);
@@ -77,30 +76,32 @@ const Entrada = () => {
     }
   }, [isupdated, option]);
 
-  useEffect(()=>{
-    const paginationBtn = async ()=>{
+  useEffect(() => {
+    const paginationBtn = async () => {
       const datos = await getData();
       setPagina(Math.ceil(datos.length / 5));
-
-    }
+    };
     paginationBtn();
-  },[])
+  }, []);
 
   const getData = async () => {
     try {
       const url = `http://localhost:8080/entradas/listar`;
       const res = await fetch(url, option);
-      if(!res.ok) throw {err:true, status: res.status, statusText: res.statusText};
+      if (!res.ok)
+        throw { err: true, status: res.status, statusText: res.statusText };
       const data = await res.json();
       return data;
-
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
-    <main style={{ position: "relative", minHeight: "100vh" }}>
+    <main
+      className="lg:m-l-63"
+      style={{ position: "relative", minHeight: "100vh" }}
+    >
       <h2 style={{ fontWeight: "normal" }}>Top Moda | Entradas</h2>
       <Buscador
         seccion="entradas"
@@ -116,7 +117,6 @@ const Entrada = () => {
           setEntradaSE={setEntradaSE}
           option={option}
         />
-    
       </div>
       <ModalSeccionEntrada
         isOpenDet={isOpenDet}
@@ -127,7 +127,12 @@ const Entrada = () => {
         setIsupdated={setIsupdated}
       />
 
-      <PaginationButton pagina={pagina} setObjeto={setEntradas} controlador={"entradas"} option={option}/>
+      <PaginationButton
+        pagina={pagina}
+        setObjeto={setEntradas}
+        controlador={"entradas"}
+        option={option}
+      />
       <ModalDetPedido
         isOpen={isOpen}
         closeModal={closeModal}

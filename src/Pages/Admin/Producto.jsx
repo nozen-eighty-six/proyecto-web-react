@@ -89,7 +89,6 @@ const Producto = () => {
         const datos = await getData();
         console.log(Math.ceil(datos.length / 5));
         setPagina(Math.ceil(datos.length / 5));
-
       } catch (error) {
         console.log(error);
       }
@@ -110,15 +109,19 @@ const Producto = () => {
   };
 
   return (
-    <main style={{ position: "relative" , minHeight: "100vh"}}>
+    <main
+      className="lg:m-l-63"
+      style={{ position: "relative", minHeight: "100vh" }}
+    >
       <h2 style={{ fontWeight: "normal" }}>Top Moda | Productos</h2>
       <Buscador
-        seccion="Producto"
+        seccion="productos"
+        setSeccionData={setProductos}
         crearButton={true}
         openModal={openModal}
         setIdent={setIdent}
       />
-      <div className="table-content">
+      <div className="table-content overflow-x-auto">
         {productos.length != 0 && (
           <ProductoTable
             productos={productos}
@@ -138,7 +141,12 @@ const Producto = () => {
         setIsupdate={setIsupdate}
         option={option}
       />
-      <PaginationButton pagina={pagina} controlador={"productos"} option={option} setObjeto={setProductos} />
+      <PaginationButton
+        pagina={pagina}
+        controlador={"productos"}
+        option={option}
+        setObjeto={setProductos}
+      />
       <LoaderComponent page={true} />
     </main>
   );

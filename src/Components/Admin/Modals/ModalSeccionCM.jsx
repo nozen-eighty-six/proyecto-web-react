@@ -85,7 +85,7 @@ const ModalSeccionCM = ({
       }
     } catch (error) {
       console.log(error);
-    } 
+    }
   };
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const ModalSeccionCM = ({
     }
   }, [ident, objetoSE, setForm]);
   return (
-    <article className={`modal_seccion ${isOpen && "is-active"}`}>
+    <article className={`modal_seccion ${isOpen && "is-open-mcm"}`}>
       <div
         className={`modal_container_mc ${
           Object.keys(errors).length != 0 && "error"

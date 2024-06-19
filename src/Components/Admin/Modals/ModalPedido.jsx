@@ -178,7 +178,7 @@ const ModalPedido = ({
       });
   }, []);
   return (
-    <article className={`modal_seccion_po ${isOpen && "is-active"}`}>
+    <article className={`modal_seccion_po ${isOpen && "is-open-mps"}`}>
       <div
         className={`modal_container_po ${
           Object.keys(errors).length != 0 && "error"

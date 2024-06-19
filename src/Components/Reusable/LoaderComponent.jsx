@@ -1,32 +1,35 @@
 import React, { useEffect, useState } from "react";
 
-const LoaderComponent = ({page}) => {
+const LoaderComponent = ({ page }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if(!page){
+    if (!page) {
       document.body.style.overflow = "hidden";
-    const timeout = setTimeout(() => {
-      setLoading(false);
-      document.body.style.overflow = "visible";
-    }, 2000);
+      const timeout = setTimeout(() => {
+        setLoading(false);
+        document.body.style.overflowY = "visible";
+      }, 2000);
 
-    return () => clearTimeout(timeout);
-    }
-    else{
+      return () => clearTimeout(timeout);
+    } else {
       document.body.style.overflowY = "hidden";
       const timeout = setTimeout(() => {
         setLoading(false);
         document.body.style.overflowY = "visible";
       }, 1500);
-  
+
       return () => clearTimeout(timeout);
     }
-
   }, [loading, page]);
 
   return (
-    <div className={`loader-component ${loading && "is-loading"}`}>
+    <div
+      className={`loader-component absolute bg-gray-400  top-0 left-0 
+      w-full h-screen justify-center items-center  ${
+        loading ? "flex" : "hidden"
+      }`}
+    >
       <div>
         <svg
           width="100"

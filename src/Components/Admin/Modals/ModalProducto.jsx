@@ -68,7 +68,7 @@ const ModalProducto = ({
   productoSE,
   setIssaved,
   setIsupdate,
-  option
+  option,
 }) => {
   const { form, errors, handleBlur, handleChange, setErrors, setForm } =
     useForm(initial, validation);
@@ -202,7 +202,7 @@ const ModalProducto = ({
       });
 
     helpHttp()
-      .get("http://localhost:8080/marcas/listar",option)
+      .get("http://localhost:8080/marcas/listar", option)
       .then((res) => {
         if (!res.err) {
           setMarcas(res);
@@ -212,7 +212,7 @@ const ModalProducto = ({
       });
 
     helpHttp()
-      .get("http://localhost:8080/proveedores/listar",option)
+      .get("http://localhost:8080/proveedores/listar", option)
       .then((res) => {
         if (!res.err) {
           setProveedores(res);
@@ -243,7 +243,7 @@ const ModalProducto = ({
     document.body.style.overflow = isOpen ? "hidden" : "visible";
   }, [isOpen]);
   return (
-    <article className={`modal_seccion_pd ${isOpen && "is-active"}`}>
+    <article className={`modal_seccion_pd ${isOpen && " is-open-mpr"}`}>
       <div
         className={`modal_container_pd ${
           Object.keys(errors).length != 0 && "error"

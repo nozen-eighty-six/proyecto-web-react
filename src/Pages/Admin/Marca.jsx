@@ -105,17 +105,21 @@ const Marca = () => {
   };
 
   return (
-    <main style={{ position: "relative", minHeight: "100vh" }}>
+    <main
+      className="lg:m-l-63"
+      style={{ position: "relative", minHeight: "100vh" }}
+    >
       <h2 style={{ fontWeight: "normal" }}>Top Moda | Marcas</h2>
       <Buscador
         seccion="marcas"
+        setSeccionData={setMarcas}
         abrirModalCrearSeccion={true}
         crearButton={true}
         openModal={openModal}
         setIdent={setIdent}
       />
 
-      <div className="table-content">
+      <div className="table-content overflow-x-auto">
         {marcas.length !== 0 && (
           <TableCTMR
             data={marcas}
@@ -128,7 +132,12 @@ const Marca = () => {
         )}
       </div>
 
-      <PaginationButton pagina={pagina} controlador={"marcas"} option={option} setObjeto={setMarcas}/>
+      <PaginationButton
+        pagina={pagina}
+        controlador={"marcas"}
+        option={option}
+        setObjeto={setMarcas}
+      />
       <ModalSeccionCM
         isOpen={isOpen}
         closeModal={closeModal}

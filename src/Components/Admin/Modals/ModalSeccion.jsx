@@ -126,7 +126,11 @@ const ModalSeccion = ({
   }, [ident, proveeSE, setForm]);
 
   return (
-    <article className={`modal_seccion ${isOpen && "is-active"}`}>
+    <article
+      className={`modal_seccion transition-opacity  duration-500 ${
+        isOpen && "is-open-mp"
+      }`}
+    >
       <div
         className={`modal_container ${
           Object.keys(errors).length != 0 && "error"

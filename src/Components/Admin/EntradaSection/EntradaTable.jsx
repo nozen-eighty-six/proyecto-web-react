@@ -1,7 +1,16 @@
+import "../../../../public/css/Admin/tablePrueba.css";
+
 import "../../../../public/css/Admin/table.css";
 import helpHttp from "../../../helpers/helpHttp";
 
-const EntradaTable = ({ entradas, openModal, setIdentificador, setEntradaSE, openModalDet,option }) => {
+const EntradaTable = ({
+  entradas,
+  openModal,
+  setIdentificador,
+  setEntradaSE,
+  openModalDet,
+  option,
+}) => {
   const formatearFecha = (fecha) => {
     let date = new Date(fecha);
     let day = date.getDate();
@@ -36,7 +45,7 @@ const EntradaTable = ({ entradas, openModal, setIdentificador, setEntradaSE, ope
   return (
     <table className="table table-striped table-bordered" id="tablaEntradas">
       <thead>
-        <tr>
+        <tr className="sm:hidden lg:table-row">
           <th scope="col">Pedido</th>
           <th scope="col">Fecha Recepción</th>
           <th scope="col">Proveedor</th>
@@ -51,18 +60,22 @@ const EntradaTable = ({ entradas, openModal, setIdentificador, setEntradaSE, ope
           entradas.map((p, i) => {
             return (
               <tr key={i}>
-                <td>{p.pedidoEntrada.id}</td>
-                <td>{formatearFecha(p.pedidoEntrada.fEntrega)}</td>
-                <td>{p.pedidoEntrada.proveedor.nombreProveedor}</td>
-                <td>{p.ubicacion}</td>
-                <td>
+                <td data-label="Número Pedido">{p.pedidoEntrada.id}</td>
+                <td data-label="Fecha Entrega">
+                  {formatearFecha(p.pedidoEntrada.fEntrega)}
+                </td>
+                <td data-label="Proveedor">
+                  {p.pedidoEntrada.proveedor.nombreProveedor}
+                </td>
+                <td data-label="Ubicación">{p.ubicacion}</td>
+                <td data-label="Estado">
                   {p.estado == "NRecepcionado"
                     ? "No Recepcionado"
                     : "Recepcionado"}
                 </td>
                 <td>
                   <button
-                    className="btn btn-primary see col-12"
+                    className="btn btn-primary see col-12 bg-gray-200 hover:bg-gray-300"
                     data-id={p.pedidoEntrada.id}
                     data-name="productos"
                     onClick={abrirModal}
@@ -72,7 +85,7 @@ const EntradaTable = ({ entradas, openModal, setIdentificador, setEntradaSE, ope
                 </td>
                 <td>
                   <button
-                    className="btn btn-warning edit col-12 "
+                    className="btn btn-warning edit col-12 bg-gray-200 hover:bg-gray-300"
                     data-id={p.id}
                     data-name="productos"
                     onClick={() => {
